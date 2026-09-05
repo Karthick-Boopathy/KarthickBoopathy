@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --cad-grid-color: rgba(203, 213, 225, 0.4);
+    --cad-subgrid-color: rgba(226, 232, 240, 0.6);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #F8FAFC;
+    color: #334155;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Accessible high-contrast focus rings */
+  :focus-visible {
+    outline: 2px solid #0052CC;
+    outline-offset: 2px;
+  }
+}
+
+/* CAD / Technical Engineering Drafting Grid */
+.bg-cad-grid {
+  background-image: 
+    linear-gradient(to right, var(--cad-subgrid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cad-subgrid-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-cad-major-grid {
+  background-image: 
+    linear-gradient(to right, var(--cad-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cad-grid-color) 1px, transparent 1px);
+  background-size: 96px 96px;
+}
+
+/* Blueprint Corner Fiducial Markers (+) */
+.cad-corner-tl::before {
+  content: "+";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 14px;
+  color: #94A3B8;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.cad-corner-tr::after {
+  content: "+";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 14px;
+  color: #94A3B8;
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* Engineering hairline borders */
+.border-hairline {
+  border-width: 1px;
+  border-color: #E2E8F0;
+}
+
+/* Monospace technical callout */
+.spec-label {
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Fluid entrance animations */
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-hero-entrance {
+  animation: heroFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
