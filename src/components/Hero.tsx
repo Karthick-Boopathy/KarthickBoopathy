@@ -80,6 +80,7 @@ export const Hero: React.FC = () => {
             <div className="pt-3 flex flex-wrap items-center gap-4">
               <a
                 href={RESUME_PDF_URL}
+                download="Karthick_Boopathy_Resume.docx"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-blueprint-600 text-white font-mono text-xs uppercase tracking-wider font-semibold rounded transition-all shadow-sm hover:shadow-md"

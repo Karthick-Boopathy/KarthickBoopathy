@@ -24,10 +24,9 @@ export const LINKEDIN_URL = "https://www.linkedin.com/in/karthick-boopathy";
 export const KANNAN_FARMS_INSTAGRAM_URL = "https://instagram.com/kannanfarms";
 
 /**
- * // TODO(karthick): Link to your downloadable resume PDF.
- * Drop your resume file in /public/resume.pdf or link to an external hosted PDF.
+ * Link to downloadable resume file (uploaded Karthick_Boopathy_Resume.docx)
  */
-export const RESUME_PDF_URL = "./resume.pdf";
+export const RESUME_PDF_URL = `${import.meta.env.BASE_URL}Karthick_Boopathy_Resume.docx`;
 
 // ============================================================================
 // VERBATIM PORTFOLIO DATA (Nothing dropped or shortened)

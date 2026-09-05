@@ -121,6 +121,7 @@ export const Footer: React.FC = () => {
               <li>
                 <a
                   href={RESUME_PDF_URL}
+                  download="Karthick_Boopathy_Resume.docx"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-blueprint-400 hover:text-blueprint-300 transition-colors font-semibold"

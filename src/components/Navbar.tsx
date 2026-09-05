@@ -117,6 +117,7 @@ export const Navbar: React.FC = () => {
             </a>
             <a
               href={RESUME_PDF_URL}
+              download="Karthick_Boopathy_Resume.docx"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-medium font-mono uppercase tracking-wider text-white bg-slate-900 hover:bg-blueprint-600 rounded transition-all shadow-xs"
@@ -130,6 +131,7 @@ export const Navbar: React.FC = () => {
           <div className="flex md:hidden items-center space-x-2">
             <a
               href={RESUME_PDF_URL}
+              download="Karthick_Boopathy_Resume.docx"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-mono uppercase tracking-wider text-white bg-slate-900 rounded"
@@ -191,6 +193,7 @@ export const Navbar: React.FC = () => {
             </div>
             <a
               href={RESUME_PDF_URL}
+              download="Karthick_Boopathy_Resume.docx"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-mono uppercase tracking-wider text-white bg-blueprint-600 rounded"
