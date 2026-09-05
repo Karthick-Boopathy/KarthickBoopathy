@@ -3,10 +3,9 @@
 // ============================================================================
 
 /**
- * // TODO(karthick): Place your headshot in /public/images/profile.jpg (or another path) and update PHOTO_PATH below.
- * If left empty or file is not found, the website renders an engineered CAD blueprint avatar.
+ * Headshot portrait of Karthick Boopathy with SEO-optimized filename
  */
-export const PHOTO_PATH = "./images/profile.jpg";
+export const PHOTO_PATH = `${import.meta.env.BASE_URL}images/karthick-boopathy.jpg`;
 
 /**
  * // TODO(karthick): Set your GitHub profile link below.

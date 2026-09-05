@@ -135,13 +135,16 @@ export const Hero: React.FC = () => {
                 </div>
 
                 {/* Portrait Display / Engineered Fallback */}
-                <div className="relative aspect-4/5 bg-slate-100 rounded border border-slate-200 overflow-hidden flex items-center justify-center">
+                <figure className="relative aspect-4/5 bg-slate-100 rounded border border-slate-200 overflow-hidden flex items-center justify-center m-0">
                   {!imgError ? (
                     <img
                       src={PHOTO_PATH}
                       alt="Karthick Boopathy - Automobile Engineer & Full-Stack Builder"
+                      title="Karthick Boopathy - Engineer & Independent Technical Builder"
+                      itemProp="image"
+                      loading="eager"
                       onError={() => setImgError(true)}
-                      className="w-full h-full object-cover grayscale contrast-105 hover:grayscale-0 transition-all duration-300"
+                      className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-300"
                     />
                   ) : (
                     /* Engineering Blueprint Fallback Avatar */
@@ -175,7 +178,7 @@ export const Hero: React.FC = () => {
                     </span>
                     <span>COIMBATORE // IND</span>
                   </div>
-                </div>
+                </figure>
 
                 {/* Footer Technical Dimensions */}
                 <div className="pt-2 mt-2 border-t border-slate-200 flex items-center justify-between text-[9px] font-mono text-slate-400">
