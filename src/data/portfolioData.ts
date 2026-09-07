@@ -14,14 +14,14 @@ export const PHOTO_PATH = `${import.meta.env.BASE_URL}images/karthick-boopathy.j
 export const GITHUB_URL = "https://github.com/Karthick-Boopathy";
 
 /**
- * // TODO(karthick): Set your LinkedIn profile URL below.
+ * Real LinkedIn profile link
  */
-export const LINKEDIN_URL = "https://www.linkedin.com/in/karthick-boopathy";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/karthick-boopathy-b77916229?utm_source=share_via&utm_content=profile&utm_medium=member_ios";
 
 /**
- * // TODO(karthick): Set your Kannan Farms Instagram page URL below.
+ * Real Kannan Farms Instagram page URL
  */
-export const KANNAN_FARMS_INSTAGRAM_URL = "https://instagram.com/kannanfarms";
+export const KANNAN_FARMS_INSTAGRAM_URL = "https://www.instagram.com/kannan.farms?stkn=MWk3OXJycGh1Zmtkbg%3D%3D&utm_source=qr";
 
 /**
  * Link to downloadable resume file (uploaded Karthick_Boopathy_Resume.docx)
@@ -235,24 +235,13 @@ export const selectedProjects: ProjectItem[] = [
       { label: "Constraint", val: "Camera-Free Low Cost" },
     ],
   },
-  {
-    title: "Drone Flight Simulator",
-    durationOrType: "Personal project",
-    description:
-      "Built a browser-based flight simulator using HTML5 Canvas and the Gamepad API, with physics simulation and motor mixing, to support an Arduino-based hardware drone build.",
-    architecture: ["HTML5 Canvas", "Gamepad API", "Aerodynamic Physics", "Quad Motor Mixing Logic"],
-    specs: [
-      { label: "Interface", val: "Browser Hardware Input" },
-      { label: "Physics", val: "6-DoF Motor Dynamics" },
-      { label: "Companion", val: "Arduino Drone Hardware" },
-    ],
-  },
 ];
 
 export interface LabItem {
   title: string;
   description: string;
   tag: string;
+  url?: string;
 }
 
 export const exploratoryProjects: LabItem[] = [
@@ -260,6 +249,7 @@ export const exploratoryProjects: LabItem[] = [
     title: "BloomWish",
     description: "A two-page static site with a hash-encoded wish link and a layered, cinematic cherry blossom tree canvas animation.",
     tag: "Canvas & Generative Animation",
+    url: "https://bloomwishes.github.io/bloom/",
   },
   {
     title: "ReelBot India",
@@ -267,9 +257,10 @@ export const exploratoryProjects: LabItem[] = [
     tag: "AI Automation & Pipelines",
   },
   {
-    title: "Vastu Shastra Floor Plan",
-    description: "A Vastu Shastra-compliant home floor plan designed for a 5-cent plot, delivered as an interactive HTML floor plan.",
-    tag: "Architectural & Interactive HTML",
+    title: "MyShop Prototype",
+    description: "A prototype e-commerce storefront exploring custom Shopify-like store architecture, dynamic product catalog, and responsive checkout flows.",
+    tag: "E-Commerce Architecture",
+    url: "https://bloomwishes.github.io/myshoptest/index",
   },
 ];
 

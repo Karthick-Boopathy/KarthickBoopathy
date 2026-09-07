@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Video, Compass, FlaskConical } from 'lucide-react';
+import { Sparkles, Video, ShoppingBag, FlaskConical, ExternalLink } from 'lucide-react';
 import { exploratoryProjects } from '../data/portfolioData';
 
 export const Labs: React.FC = () => {
@@ -10,7 +10,7 @@ export const Labs: React.FC = () => {
       case 1:
         return <Video className="w-4 h-4 text-blueprint-600" />;
       case 2:
-        return <Compass className="w-4 h-4 text-blueprint-600" />;
+        return <ShoppingBag className="w-4 h-4 text-blueprint-600" />;
       default:
         return <FlaskConical className="w-4 h-4 text-blueprint-600" />;
     }
@@ -29,7 +29,7 @@ export const Labs: React.FC = () => {
             Also Building / Labs
           </h2>
           <p className="text-slate-600 mt-1 text-sm">
-            Independent experiments spanning generative canvas graphics, AI workflow pipelines, and interactive architectural design.
+            Independent experiments spanning generative canvas graphics, AI workflow pipelines, and e-commerce architectures.
           </p>
         </div>
 
@@ -38,24 +38,40 @@ export const Labs: React.FC = () => {
           {exploratoryProjects.map((item, idx) => (
             <div
               key={item.title}
-              className="p-5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition-all duration-200 shadow-2xs"
+              className="p-5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-slate-300 transition-all duration-200 shadow-2xs flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <div className="p-2 rounded bg-white border border-slate-200">
-                  {getIcon(idx)}
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <div className="p-2 rounded bg-white border border-slate-200">
+                    {getIcon(idx)}
+                  </div>
+                  <span className="text-[10px] font-mono text-blueprint-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 font-medium">
+                    {item.tag}
+                  </span>
                 </div>
-                <span className="text-[10px] font-mono text-blueprint-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 font-medium">
-                  {item.tag}
-                </span>
+
+                <h3 className="font-heading font-semibold text-base text-slate-900 mb-2">
+                  {item.title}
+                </h3>
+
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  {item.description}
+                </p>
               </div>
 
-              <h3 className="font-heading font-semibold text-base text-slate-900 mb-2">
-                {item.title}
-              </h3>
-
-              <p className="text-slate-600 text-xs leading-relaxed">
-                {item.description}
-              </p>
+              {item.url && (
+                <div className="mt-4 pt-3 border-t border-slate-100">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-blueprint-600 hover:text-blueprint-800 hover:underline transition-colors"
+                  >
+                    <span>View Live Build</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              )}
             </div>
           ))}
         </div>

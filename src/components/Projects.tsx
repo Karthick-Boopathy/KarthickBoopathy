@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cpu, Radio, Gamepad2, Wrench, Layers } from 'lucide-react';
+import { Cpu, Radio, Wrench, Layers } from 'lucide-react';
 import { selectedProjects } from '../data/portfolioData';
 
 export const Projects: React.FC = () => {
@@ -9,8 +9,6 @@ export const Projects: React.FC = () => {
         return <Radio className="w-5 h-5 text-blueprint-600" />;
       case 1:
         return <Cpu className="w-5 h-5 text-blueprint-600" />;
-      case 2:
-        return <Gamepad2 className="w-5 h-5 text-blueprint-600" />;
       default:
         return <Wrench className="w-5 h-5 text-blueprint-600" />;
     }
@@ -29,12 +27,12 @@ export const Projects: React.FC = () => {
             Selected Projects
           </h2>
           <p className="text-slate-600 mt-2 text-base">
-            Autonomous vehicle sensing prototypes, analog hardware guidance systems, and physics flight simulation.
+            Autonomous vehicle sensing prototypes and low-cost analog hardware guidance systems.
           </p>
         </div>
 
         {/* Project Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
           {selectedProjects.map((project, index) => (
             <div
               key={project.title}
