@@ -37,6 +37,7 @@ export interface PersonalInfo {
   title: string;
   location: string;
   coordinates: string;
+  googleMapsUrl: string;
   phone: string;
   email: string;
   kannanFarmsWebsite: string;
@@ -46,7 +47,8 @@ export const personalInfo: PersonalInfo = {
   name: "Karthick Boopathy",
   title: "Engineer & Independent Technical Builder",
   location: "Coimbatore, Tamil Nadu, India",
-  coordinates: "11.0168° N, 76.9558° E",
+  coordinates: "10°56'19.3\"N 76°57'07.5\"E",
+  googleMapsUrl: "https://www.google.com/maps?q=10%C2%B056'19.3%22N+76%C2%B057'07.5%22E",
   phone: "+91 9750341456",
   email: "karthicboopathy@gmail.com",
   kannanFarmsWebsite: "https://kannanfarms.com",

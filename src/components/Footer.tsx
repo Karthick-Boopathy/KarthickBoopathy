@@ -27,9 +27,17 @@ export const Footer: React.FC = () => {
               Automobile engineering graduate &amp; independent technical builder based in {personalInfo.location}. Open for technical collaborations, systems engineering roles, and innovative ventures.
             </p>
 
-            <div className="pt-2 flex items-center gap-2 text-xs font-mono text-slate-400">
-              <Compass className="w-3.5 h-3.5 text-blueprint-500" />
-              <span>COORDINATES: {personalInfo.coordinates}</span>
+            <div className="pt-2">
+              <a
+                href={personalInfo.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-white transition-colors group"
+                title="View coordinates on Google Maps"
+              >
+                <Compass className="w-3.5 h-3.5 text-blueprint-400 group-hover:rotate-45 transition-transform shrink-0" />
+                <span>COORDINATES: <span className="underline underline-offset-2 decoration-slate-600 group-hover:decoration-blueprint-400">{personalInfo.coordinates}</span></span>
+              </a>
             </div>
           </div>
 
@@ -57,9 +65,17 @@ export const Footer: React.FC = () => {
                   <span>{personalInfo.phone}</span>
                 </a>
               </li>
-              <li className="flex items-center gap-2 text-slate-400">
-                <MapPin className="w-3.5 h-3.5 text-blueprint-400 shrink-0" />
-                <span>{personalInfo.location}</span>
+              <li>
+                <a
+                  href={personalInfo.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors group"
+                  title="View location on Google Maps"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-blueprint-400 shrink-0" />
+                  <span className="group-hover:underline underline-offset-2">{personalInfo.location}</span>
+                </a>
               </li>
             </ul>
           </div>

@@ -19,10 +19,16 @@ export const Hero: React.FC = () => {
               OPERATOR STATUS: ACTIVE
             </span>
             <span className="hidden sm:inline-block text-slate-300">|</span>
-            <span className="hidden sm:flex items-center gap-1">
-              <Compass className="w-3.5 h-3.5 text-blueprint-600" />
-              {personalInfo.location} [{personalInfo.coordinates}]
-            </span>
+            <a
+              href={personalInfo.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:flex items-center gap-1.5 hover:text-blueprint-600 transition-colors group cursor-pointer"
+              title="Open coordinates in Google Maps"
+            >
+              <Compass className="w-3.5 h-3.5 text-blueprint-600 group-hover:rotate-45 transition-transform shrink-0" />
+              <span>{personalInfo.location} <span className="underline underline-offset-2 decoration-blueprint-300 group-hover:decoration-blueprint-600">[{personalInfo.coordinates}]</span></span>
+            </a>
           </div>
           <div className="text-right tracking-widest text-[11px] text-slate-400">
             SPEC: AUTO-ENG // FULLSTACK // FOUNDER
