@@ -65,7 +65,7 @@ export const Hero: React.FC = () => {
             </a>
           </div>
           <div className="text-right tracking-widest text-[11px] text-slate-400 dark:text-slate-500 spec-label">
-            SPEC: AUTO-ENG // VIBE CODER // ENTERPRISE
+            SPEC: AUTOMOBILE ENG // SYSTEMS // ENTERPRISE
           </div>
         </motion.div>
 
@@ -81,9 +81,9 @@ export const Hero: React.FC = () => {
             <motion.div variants={itemVariants} className="space-y-3">
               <div className="flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-wider font-semibold">
                 <span className="px-2 py-0.5 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 rounded text-[11px] text-blue-600 dark:text-blue-400">KB-PORTFOLIO // V3</span>
-                <span className="px-2.5 py-0.5 rounded bg-purple-50 dark:bg-purple-500/15 border border-purple-200 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 text-[11px] font-bold flex items-center gap-1.5 shadow-2xs">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping inline-block" />
-                  VIBE CODER &times; AGENTIC BUILDER
+                <span className="px-2.5 py-0.5 rounded bg-blue-50 dark:bg-blue-500/15 border border-blue-200 dark:border-blue-500/30 text-blue-700 dark:text-blue-300 text-[11px] font-bold flex items-center gap-1.5 shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping inline-block" />
+                  AUTOMOBILE ENG &times; SYSTEMS BUILDER
                 </span>
               </div>
 
@@ -100,10 +100,10 @@ export const Hero: React.FC = () => {
 
             {/* Core Hook Statement */}
             <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl font-normal">
-              A hands-on builder and <span className="text-purple-600 dark:text-purple-400 font-semibold">vibe coder</span> operating at the convergence of{' '}
+              An <span className="text-slate-900 dark:text-white font-medium">automobile engineer</span> and hands-on systems builder operating at the convergence of{' '}
               <span className="text-slate-900 dark:text-white font-medium">vehicle systems engineering</span>,{' '}
-              <span className="text-slate-900 dark:text-white font-medium">high-velocity AI-augmented software architecture</span>, and{' '}
-              <span className="text-slate-900 dark:text-white font-medium">independent enterprise</span>. Rapidly converting intuition into hardened code — from ADAS camera calibration and EV powertrains to local LLM quantitative trading bots and full-stack e-commerce.
+              <span className="text-slate-900 dark:text-white font-medium">high-velocity software architecture</span>, and{' '}
+              <span className="text-slate-900 dark:text-white font-medium">independent enterprise</span>. Rapidly converting engineering principles into production-grade systems — from ADAS camera calibration and EV powertrains to quantitative trading bots and full-stack e-commerce.
             </motion.p>
 
             {/* Dual Core Pillars Badges */}
@@ -116,24 +116,24 @@ export const Hero: React.FC = () => {
                   <Wrench className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h2 className="font-mono text-xs uppercase font-bold text-slate-900 dark:text-slate-100">Automotive & Hardware</h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ADAS Calibration, EV battery sizing, Arduino & PLC logic</p>
+                  <h2 className="font-mono text-xs uppercase font-bold text-slate-900 dark:text-slate-100">Automotive &amp; Hardware</h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">ADAS Calibration, EV battery sizing, Arduino &amp; PLC logic</p>
                 </div>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                className="p-3.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-500/40 rounded shadow-2xs hover:shadow-xs transition-colors flex items-start gap-3 glow-border"
+                className="p-3.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-500/40 rounded shadow-2xs hover:shadow-xs transition-colors flex items-start gap-3 glow-border"
               >
-                <div className="p-2 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 rounded text-purple-700 dark:text-purple-300">
-                  <Cpu className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <div className="p-2 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 rounded text-blue-700 dark:text-blue-300">
+                  <Cpu className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
                   <h2 className="font-mono text-xs uppercase font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                    <span>Vibe Coding &amp; Autonomous</span>
-                    <span className="px-1.5 py-0.2 rounded bg-purple-100 dark:bg-purple-900/60 text-[9px] text-purple-700 dark:text-purple-300 font-mono">10x</span>
+                    <span>Software &amp; Intelligent Systems</span>
+                    <span className="px-1.5 py-0.2 rounded bg-blue-100 dark:bg-blue-900/60 text-[9px] text-blue-700 dark:text-blue-300 font-mono">10x</span>
                   </h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Agentic workflows, FastAPI, React, Ollama LLMs &amp; prompt craft</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">FastAPI, React, local Ollama LLMs, agentic tooling &amp; automation</p>
                 </div>
               </motion.div>
             </motion.div>

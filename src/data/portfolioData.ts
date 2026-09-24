@@ -45,7 +45,7 @@ export interface PersonalInfo {
 
 export const personalInfo: PersonalInfo = {
   name: "Karthick Boopathy",
-  title: "Automobile Engineer, Full-Stack Builder & Vibe Coder",
+  title: "Automobile Engineer & Full-Stack Systems Builder",
   location: "Coimbatore, Tamil Nadu, India",
   coordinates: "10°56'19.3\"N 76°57'07.5\"E",
   googleMapsUrl: "https://www.google.com/maps?q=10%C2%B056'19.3%22N+76%C2%B057'07.5%22E",
@@ -55,7 +55,7 @@ export const personalInfo: PersonalInfo = {
 };
 
 export const aboutSummary =
-  "Automobile engineering graduate and modern vibe coder with hands-on automotive experience (ADAS calibration, EV design, vehicle systems) and high-velocity software engineering skills built through AI-augmented workflows and self-directed projects. Currently runs a natural-products e-commerce business end-to-end and builds automation tools, trading systems, and AI-assisted applications. Comfortable moving fluidly between physical hardware, mechanical rigor, and rapid vibe-coded full-stack software.";
+  "Automobile engineering graduate and systems builder with hands-on automotive experience (ADAS calibration, EV design, vehicle systems) and high-velocity software engineering skills built through modern AI tooling and self-directed projects. Currently runs a natural-products e-commerce business end-to-end and builds automation tools, trading systems, and AI-assisted applications. Comfortable moving fluidly between physical hardware, mechanical rigor, and full-stack software engineering.";
 
 export interface SkillCategory {
   category: string;
@@ -65,8 +65,8 @@ export interface SkillCategory {
 
 export const technicalSkills: SkillCategory[] = [
   {
-    category: "Software & Vibe Coding",
-    tagline: "High-velocity AI-augmented development, trading engines, local LLM integrations, and reactive web platforms.",
+    category: "Software & Intelligent Systems",
+    tagline: "High-velocity systems development, quantitative trading engines, local LLM integrations, and reactive web platforms.",
     skills: [
       "Vibe Coding & Agentic AI",
       "Python",

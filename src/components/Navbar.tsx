@@ -72,8 +72,8 @@ export const Navbar: React.FC = () => {
                 {personalInfo.name}
               </span>
               <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-widest flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-500 inline-block animate-pulse shadow-[0_0_6px_#A855F7]"></span>
-                ENG // VIBE_CODER
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse shadow-[0_0_6px_#10B981]"></span>
+                AUTOMOBILE // SYSTEMS ENG
               </span>
             </div>
           </motion.a>
