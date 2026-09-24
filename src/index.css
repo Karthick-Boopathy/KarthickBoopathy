@@ -8,6 +8,11 @@
     --cad-subgrid-color: rgba(226, 232, 240, 0.6);
   }
 
+  .dark {
+    --cad-grid-color: rgba(59, 130, 246, 0.06);
+    --cad-subgrid-color: rgba(148, 163, 184, 0.04);
+  }
+
   html {
     scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
@@ -15,20 +20,53 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Custom CAD crosshair cursor */
+  html.dark {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cline x1='12' y1='2' x2='12' y2='10' stroke='%2394A3B8' stroke-width='0.8'/%3E%3Cline x1='12' y1='14' x2='12' y2='22' stroke='%2394A3B8' stroke-width='0.8'/%3E%3Cline x1='2' y1='12' x2='10' y2='12' stroke='%2394A3B8' stroke-width='0.8'/%3E%3Cline x1='14' y1='12' x2='22' y2='12' stroke='%2394A3B8' stroke-width='0.8'/%3E%3Ccircle cx='12' cy='12' r='2.5' fill='none' stroke='%233B82F6' stroke-width='0.6'/%3E%3C/svg%3E") 12 12, crosshair;
+  }
+  html:not(.dark) {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cline x1='12' y1='2' x2='12' y2='10' stroke='%2364748B' stroke-width='0.8'/%3E%3Cline x1='12' y1='14' x2='12' y2='22' stroke='%2364748B' stroke-width='0.8'/%3E%3Cline x1='2' y1='12' x2='10' y2='12' stroke='%2364748B' stroke-width='0.8'/%3E%3Cline x1='14' y1='12' x2='22' y2='12' stroke='%2364748B' stroke-width='0.8'/%3E%3Ccircle cx='12' cy='12' r='2.5' fill='none' stroke='%232563EB' stroke-width='0.6'/%3E%3C/svg%3E") 12 12, crosshair;
+  }
+
+  a, button, [role="button"], input, select, textarea, label[for] {
+    cursor: pointer;
+  }
+
   body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
+    background-color: #0B0F1A;
+    color: #CBD5E1;
+  }
+
+  html:not(.dark) body {
     background-color: #F8FAFC;
     color: #334155;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   /* Accessible high-contrast focus rings */
   :focus-visible {
-    outline: 2px solid #0052CC;
+    outline: 2px solid #3B82F6;
     outline-offset: 2px;
+  }
+
+  /* Selection colors */
+  .dark ::selection {
+    background-color: rgba(59, 130, 246, 0.3);
+    color: #BFDBFE;
+  }
+  html:not(.dark) ::selection {
+    background-color: #DBEAFE;
+    color: #1E40AF;
   }
 }
 
-/* CAD / Technical Engineering Drafting Grid */
+/* ============================================================
+   CAD / Technical Engineering Drafting Grid
+   ============================================================ */
 .bg-cad-grid {
   background-image: 
     linear-gradient(to right, var(--cad-subgrid-color) 1px, transparent 1px),
@@ -43,7 +81,107 @@
   background-size: 96px 96px;
 }
 
-/* Blueprint Corner Fiducial Markers (+) */
+/* ============================================================
+   Noise / Grain Texture Overlay
+   ============================================================ */
+.noise-overlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+}
+
+/* ============================================================
+   Glassmorphism
+   ============================================================ */
+.glass {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+.dark .glass {
+  background: rgba(11, 15, 26, 0.75);
+  border-color: rgba(59, 130, 246, 0.08);
+}
+html:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(226, 232, 240, 0.8);
+}
+
+/* ============================================================
+   Animated Glow Border (conic gradient on hover)
+   ============================================================ */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glow-border {
+  position: relative;
+  overflow: visible;
+}
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: conic-gradient(from var(--angle), #3B82F6, #06B6D4, #8B5CF6, #EC4899, #3B82F6);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: rotate-gradient 4s linear infinite;
+}
+.glow-border:hover::before {
+  opacity: 0.6;
+}
+/* Light mode: softer glow */
+html:not(.dark) .glow-border:hover::before {
+  opacity: 0.25;
+}
+
+@keyframes rotate-gradient {
+  to { --angle: 360deg; }
+}
+
+/* ============================================================
+   Text Shimmer Effect
+   ============================================================ */
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    #F1F5F9 35%,
+    #3B82F6 50%,
+    #F1F5F9 65%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s ease-in-out infinite;
+}
+html:not(.dark) .text-shimmer {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  animation: none;
+  color: #0F172A;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================================
+   Blueprint Corner Fiducial Markers (+)
+   ============================================================ */
 .cad-corner-tl::before {
   content: "+";
   position: absolute;
@@ -51,10 +189,11 @@
   left: -8px;
   font-family: var(--font-mono, monospace);
   font-size: 14px;
-  color: #94A3B8;
   line-height: 1;
   pointer-events: none;
 }
+.dark .cad-corner-tl::before { color: #334155; }
+html:not(.dark) .cad-corner-tl::before { color: #94A3B8; }
 
 .cad-corner-tr::after {
   content: "+";
@@ -63,16 +202,18 @@
   right: -8px;
   font-family: var(--font-mono, monospace);
   font-size: 14px;
-  color: #94A3B8;
   line-height: 1;
   pointer-events: none;
 }
+.dark .cad-corner-tr::after { color: #334155; }
+html:not(.dark) .cad-corner-tr::after { color: #94A3B8; }
 
 /* Engineering hairline borders */
 .border-hairline {
   border-width: 1px;
-  border-color: #E2E8F0;
 }
+.dark .border-hairline { border-color: #1E293B; }
+html:not(.dark) .border-hairline { border-color: #E2E8F0; }
 
 /* Monospace technical callout */
 .spec-label {
@@ -81,7 +222,69 @@
   text-transform: uppercase;
 }
 
-/* Fluid entrance animations */
+/* ============================================================
+   Section Wave Divider
+   ============================================================ */
+.section-wave {
+  position: relative;
+}
+.section-wave::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C360,40 720,0 1080,20 S1440,30 1440,20 L1440,40 L0,40 Z' fill='%230B0F1A'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 100% 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+html:not(.dark) .section-wave::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C360,40 720,0 1080,20 S1440,30 1440,20 L1440,40 L0,40 Z' fill='%23F8FAFC'/%3E%3C/svg%3E");
+}
+/* Alternate wave for sections with different bg */
+.section-wave-alt::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C360,40 720,0 1080,20 S1440,30 1440,20 L1440,40 L0,40 Z' fill='%23111827'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 100% 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+html:not(.dark) .section-wave-alt::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 C360,40 720,0 1080,20 S1440,30 1440,20 L1440,40 L0,40 Z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+}
+
+/* ============================================================
+   Duotone Blueprint Photo Treatment
+   ============================================================ */
+.photo-duotone {
+  filter: grayscale(30%) contrast(1.1) brightness(0.9);
+  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.photo-duotone:hover {
+  filter: grayscale(0%) contrast(1) brightness(1);
+}
+.photo-duotone-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.08) 100%);
+  mix-blend-mode: color;
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .photo-duotone-overlay {
+  opacity: 0;
+}
+
+/* ============================================================
+   Fluid entrance animations
+   ============================================================ */
 @keyframes heroFadeIn {
   from {
     opacity: 0;
@@ -97,12 +300,20 @@
   animation: heroFadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Respect reduced motion */
+/* ============================================================
+   Respect reduced motion
+   ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .text-shimmer {
+    animation: none !important;
+  }
+  .noise-overlay::before {
+    display: none;
   }
 }

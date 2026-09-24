@@ -1,7 +1,17 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function() {
+        var t = localStorage.getItem('kb-theme');
+        if (t === 'light') {
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary SEO Meta Tags -->
@@ -92,8 +102,7 @@
       ]
     }
     </script>
-  </head>
-  <body class="bg-[#F8FAFC] text-slate-800 font-body antialiased selection:bg-blue-100 selection:text-blue-900 min-h-screen">
+  <body class="bg-[#0B0F1A] dark:bg-[#0B0F1A] text-slate-300 font-body antialiased min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

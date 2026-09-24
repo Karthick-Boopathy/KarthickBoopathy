@@ -102,6 +102,17 @@ export const technicalSkills: SkillCategory[] = [
   },
 ];
 
+export interface CaseStudy {
+  tagline: string;
+  problem: string;
+  approach: string;
+  architectureDetails: string[];
+  metrics: { label: string; val: string }[];
+  screenshot: string;
+  screenshotAlt: string;
+  screenshotCaption: string;
+}
+
 export interface ExperienceItem {
   id: string;
   number: string;
@@ -112,6 +123,7 @@ export interface ExperienceItem {
   period: string;
   bullets: string[];
   tags: string[];
+  caseStudy?: CaseStudy;
 }
 
 export const experiences: ExperienceItem[] = [
@@ -129,6 +141,26 @@ export const experiences: ExperienceItem[] = [
       "Designed a tiered loyalty rewards program (Seedling / Grower / Harvester) and leads ongoing UI/SEO improvement passes on the storefront.",
     ],
     tags: ["E-Commerce", "React", "Firebase", "Delhivery API", "Operations & Sourcing"],
+    caseStudy: {
+      tagline: "Direct-to-Consumer Agricultural E-Commerce Architecture",
+      problem: "Traditional agricultural supply chains leave farmers dependent on middlemen and lack transparent, direct-to-consumer distribution channels for value-added products like solar-dried banana powder.",
+      approach: "Built an independent e-commerce storefront and operations hub end-to-end using React and Firebase. Integrated Google authentication, Delhivery pincode delivery estimation APIs, dynamic cart calculations with tiered loyalty rewards, and one-tap WhatsApp checkout.",
+      architectureDetails: [
+        "React + Tailwind single-page application with responsive mobile-first shopping UX",
+        "Firebase Firestore real-time customer data, order queues, and inventory state",
+        "Automated Delhivery logistics integration verifying pincode serviceability and shipping rates",
+        "Three-tier loyalty program (Seedling / Grower / Harvester) driving customer retention",
+        "Integrated WhatsApp ordering conduit for rapid customer communication and conversion"
+      ],
+      metrics: [
+        { label: "Status", val: "Live Production Enterprise" },
+        { label: "Logistics", val: "Delhivery Surface API" },
+        { label: "Stack", val: "React + Firebase + Cloud Functions" }
+      ],
+      screenshot: `${import.meta.env.BASE_URL}screenshots/kannanfarms.png`,
+      screenshotAlt: "Kannan Farms natural products online store",
+      screenshotCaption: "Live Kannan Farms Storefront (kannanfarms.com) — Direct-to-consumer natural products platform with automated delivery logistics"
+    }
   },
   {
     id: "autotrader-pro",
@@ -142,6 +174,26 @@ export const experiences: ExperienceItem[] = [
       "Audited and hardened the codebase across multiple review passes, resolving API integration bugs, silent database failures, and per-pair state isolation issues.",
     ],
     tags: ["FastAPI", "Python", "React", "Ollama LLM", "PostgreSQL", "CoinDCX API"],
+    caseStudy: {
+      tagline: "Quantitative Execution Engine with Local LLM Sentiment Inference",
+      problem: "High-frequency derivatives markets require continuous data ingestion, real-time confluence filtering, and disciplined risk limits that eliminate human emotional errors.",
+      approach: "Engineered AutoTrader Pro as an asynchronous algorithmic trading bot using FastAPI and Python. Implemented 5 modular strategy algorithms, integrated local Ollama LLM for news and market sentiment scoring, and built a real-time React monitoring terminal.",
+      architectureDetails: [
+        "Asynchronous FastAPI backend interacting with CoinDCX REST and WebSocket feeds",
+        "5 pluggable strategy engines: MA Pullback, Breakout Hunter, RSI Divergence, Grid Arbitrage, and LLM Sentiment",
+        "Local Ollama LLM integration converting raw financial headlines into quantitative sentiment vectors",
+        "PostgreSQL persistence with rigorous session isolation and transaction rollback safety",
+        "Hardened through multiple audit cycles: fixed race conditions, unhandled exceptions, and socket reconnects"
+      ],
+      metrics: [
+        { label: "Architecture", val: "FastAPI + React Dashboard" },
+        { label: "Signals", val: "5 Algorithmic Modules + LLM" },
+        { label: "Database", val: "PostgreSQL Async Session State" }
+      ],
+      screenshot: `${import.meta.env.BASE_URL}screenshots/autotrader.png`,
+      screenshotAlt: "AutoTrader Pro quantitative trading dashboard",
+      screenshotCaption: "AutoTrader Pro Terminal — Asynchronous execution monitoring, strategy allocation, and local LLM sentiment integration"
+    }
   },
   {
     id: "valeo",
@@ -244,6 +296,7 @@ export interface LabItem {
   description: string;
   tag: string;
   url?: string;
+  caseStudy?: CaseStudy;
 }
 
 export const exploratoryProjects: LabItem[] = [
@@ -252,6 +305,25 @@ export const exploratoryProjects: LabItem[] = [
     description: "A two-page static site with a hash-encoded wish link and a layered, cinematic cherry blossom tree canvas animation.",
     tag: "Canvas & Generative Animation",
     url: "https://bloomwishes.github.io/bloom/",
+    caseStudy: {
+      tagline: "Procedural Canvas Rendering & Cryptographic State Hashing",
+      problem: "Traditional online greeting cards are filled with advertisements, tracking scripts, and require account registrations or centralized databases to store user messages.",
+      approach: "Built a zero-backend interactive web application rendering an organic blooming cherry blossom tree using procedural Canvas 2D math. Messages are encrypted and packed directly into URL hash fragments for frictionless sharing.",
+      architectureDetails: [
+        "Recursive branch splitting algorithm mimicking natural botanical growth kinematics",
+        "Physics-based particle wind drift modeling petal drop velocity and oscillation",
+        "Base64 URL-fragment state decoding allowing completely serverless sharing",
+        "Optimized 60 FPS animation loop with hardware-accelerated canvas compositing"
+      ],
+      metrics: [
+        { label: "Rendering", val: "Procedural HTML5 Canvas" },
+        { label: "Backend", val: "Zero-Server / URL Encoded" },
+        { label: "Live Demo", val: "bloomwishes.github.io/bloom" }
+      ],
+      screenshot: `${import.meta.env.BASE_URL}screenshots/bloomwish.png`,
+      screenshotAlt: "BloomWish cherry blossom procedural animation",
+      screenshotCaption: "BloomWish — Procedural cherry blossom canvas graphics with serverless hash-encoded greeting payloads"
+    }
   },
   {
     title: "ReelBot India",
@@ -263,6 +335,24 @@ export const exploratoryProjects: LabItem[] = [
     description: "A prototype e-commerce storefront exploring custom Shopify-like store architecture, dynamic product catalog, and responsive checkout flows.",
     tag: "E-Commerce Architecture",
     url: "https://bloomwishes.github.io/myshoptest/index",
+    caseStudy: {
+      tagline: "Headless E-Commerce Storefront Architecture",
+      problem: "Commercial e-commerce SaaS platforms impose recurring subscription fees, transaction tariffs, and heavy JavaScript bundles that slow down mobile shopping experiences.",
+      approach: "Engineered a lightweight, reactive storefront prototype exploring headless store mechanics, dynamic SKU variation management, and instant-load product catalogs.",
+      architectureDetails: [
+        "Decoupled product matrix with multi-variant pricing and inventory status indicators",
+        "Reactive cart state persisted across browser sessions with zero database overhead",
+        "High-contrast mobile checkout UX designed for rapid order conversion on 3G networks"
+      ],
+      metrics: [
+        { label: "Architecture", val: "Lightweight Headless Store" },
+        { label: "Performance", val: "Zero Heavy Framework Bloat" },
+        { label: "Live Demo", val: "bloomwishes.github.io/myshoptest" }
+      ],
+      screenshot: `${import.meta.env.BASE_URL}screenshots/myshop.png`,
+      screenshotAlt: "MyShop e-commerce prototype interface",
+      screenshotCaption: "MyShop Store Prototype — Lightweight headless e-commerce architecture and responsive catalog"
+    }
   },
 ];
 
