@@ -112,6 +112,8 @@ export interface CaseStudy {
   screenshot: string;
   screenshotAlt: string;
   screenshotCaption: string;
+  mockupImage?: string;
+  mockupCaption?: string;
 }
 
 export interface ExperienceItem {
@@ -159,8 +161,10 @@ export const experiences: ExperienceItem[] = [
         { label: "Stack", val: "React + Firebase + Cloud Functions" }
       ],
       screenshot: `${import.meta.env.BASE_URL}screenshots/kannanfarms.png`,
-      screenshotAlt: "Kannan Farms natural products online store",
-      screenshotCaption: "Live Kannan Farms Storefront (kannanfarms.com) — Direct-to-consumer natural products platform with automated delivery logistics"
+      screenshotAlt: "Live Kannan Farms storefront with product mockups",
+      screenshotCaption: "Live Kannan Farms Storefront (kannanfarms.com) — Direct-to-consumer platform featuring live product mockups and automated delivery logistics",
+      mockupImage: `${import.meta.env.BASE_URL}screenshots/kannanfarms_mockup.png`,
+      mockupCaption: "Official Kannan Farms 3D Product Mockup — Solar-Dried Banana Powder & Moringa Powder custom jar packaging design"
     }
   },
   {
