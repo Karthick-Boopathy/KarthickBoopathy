@@ -274,52 +274,25 @@ export const Experience: React.FC = () => {
                                 </ul>
                               </div>
 
-                              {/* High-Fidelity Visual Artifacts (Storefront & Product Mockup) */}
-                              <div className="space-y-3">
-                                <div className="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-2">
-                                  <span>Visual Artifacts &amp; Production Deployments</span>
-                                  {exp.caseStudy.mockupImage && (
-                                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono">
-                                      Storefront + 3D Mockup
-                                    </span>
-                                  )}
+                              {/* High-Fidelity Screenshot Display with Ken Burns Zoom */}
+                              <div className="space-y-2">
+                                <div className="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
+                                  Production Interface Screenshot
                                 </div>
-
-                                <div className={`grid gap-4 ${exp.caseStudy.mockupImage ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
-                                  {/* Live Screenshot */}
-                                  <figure className="relative rounded-lg border border-slate-300 dark:border-slate-700/80 overflow-hidden bg-slate-900 group/img shadow-md dark:shadow-glow-sm flex flex-col">
-                                    <div className="aspect-16/10 overflow-hidden bg-slate-950 flex items-center justify-center">
-                                      <img
-                                        src={exp.caseStudy.screenshot}
-                                        alt={exp.caseStudy.screenshotAlt}
-                                        loading="lazy"
-                                        className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover/img:scale-105"
-                                      />
-                                    </div>
-                                    <figcaption className="p-3 bg-slate-900/90 dark:bg-[#0B0F1A]/95 backdrop-blur-xs border-t border-slate-800 text-[11px] font-mono text-slate-300 flex items-center justify-between mt-auto">
-                                      <span className="line-clamp-2">{exp.caseStudy.screenshotCaption}</span>
-                                      <span className="text-blue-400 text-[10px] shrink-0 ml-2 hidden sm:inline">LIVE PLATFORM</span>
-                                    </figcaption>
-                                  </figure>
-
-                                  {/* 3D Product Mockup if available */}
-                                  {exp.caseStudy.mockupImage && (
-                                    <figure className="relative rounded-lg border border-slate-300 dark:border-slate-700/80 overflow-hidden bg-slate-900 group/mockup shadow-md dark:shadow-glow-sm flex flex-col">
-                                      <div className="aspect-16/10 overflow-hidden bg-slate-950 flex items-center justify-center p-2">
-                                        <img
-                                          src={exp.caseStudy.mockupImage}
-                                          alt={exp.caseStudy.mockupCaption || "3D Product Mockup"}
-                                          loading="lazy"
-                                          className="w-full h-full object-contain transition-transform duration-700 ease-out group-hover/mockup:scale-105"
-                                        />
-                                      </div>
-                                      <figcaption className="p-3 bg-slate-900/90 dark:bg-[#0B0F1A]/95 backdrop-blur-xs border-t border-slate-800 text-[11px] font-mono text-slate-300 flex items-center justify-between mt-auto">
-                                        <span className="line-clamp-2">{exp.caseStudy.mockupCaption}</span>
-                                        <span className="text-emerald-400 text-[10px] shrink-0 ml-2 hidden sm:inline">3D PACKAGING</span>
-                                      </figcaption>
-                                    </figure>
-                                  )}
-                                </div>
+                                <figure className="relative rounded-lg border border-slate-300 dark:border-slate-700/80 overflow-hidden bg-slate-900 group/img shadow-md dark:shadow-glow-sm">
+                                  <div className="aspect-16/10 overflow-hidden">
+                                    <img
+                                      src={exp.caseStudy.screenshot}
+                                      alt={exp.caseStudy.screenshotAlt}
+                                      loading="lazy"
+                                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover/img:scale-105"
+                                    />
+                                  </div>
+                                  <figcaption className="p-3 bg-slate-900/90 dark:bg-[#0B0F1A]/95 backdrop-blur-xs border-t border-slate-800 text-[11px] font-mono text-slate-300 flex items-center justify-between">
+                                    <span>{exp.caseStudy.screenshotCaption}</span>
+                                    <span className="text-blue-400 text-[10px] hidden sm:inline">HIGH RESOLUTION VIEW</span>
+                                  </figcaption>
+                                </figure>
                               </div>
 
                               {/* Metrics Strip */}
