@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://karthick-boopathy.github.io/KarthickBoopathy/sitemap.xml
