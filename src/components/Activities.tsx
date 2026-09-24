@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Presentation, Users, Trophy, Languages, Heart, Sparkles } from 'lucide-react';
 import { eventsAndActivities, personalProfile } from '../data/portfolioData';
 
@@ -10,10 +11,16 @@ export const Activities: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-white border-b border-slate-200">
+    <section className="py-20 bg-white border-b border-slate-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="max-w-3xl mb-12"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-blueprint-600 font-semibold mb-2">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Contributions &amp; Personal Profile</span>
@@ -24,7 +31,7 @@ export const Activities: React.FC = () => {
           <p className="text-slate-600 mt-2 text-base">
             Technical symposium presentations, community initiatives, language proficiencies, and personal pursuits.
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Left Column: Events & Activities (7 cols) */}
@@ -32,10 +39,15 @@ export const Activities: React.FC = () => {
             <h3 className="font-mono text-xs uppercase tracking-wider text-slate-500 font-bold mb-2">
               Key Events &amp; Initiatives
             </h3>
-            {eventsAndActivities.map((event) => (
-              <div
+            {eventsAndActivities.map((event, idx) => (
+              <motion.div
                 key={event.title}
-                className="p-5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white transition-colors shadow-2xs flex items-start gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.45, delay: idx * 0.08, ease: [0.21, 0.47, 0.32, 0.98] }}
+                whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                className="p-5 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-white hover:border-blueprint-300 transition-colors shadow-2xs hover:shadow-xs flex items-start gap-4"
               >
                 <div className="p-2.5 rounded bg-white border border-slate-200 shrink-0">
                   {getActivityIcon(event.type)}
@@ -53,14 +65,21 @@ export const Activities: React.FC = () => {
                     {event.context}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
           {/* Right Column: Languages & Interests (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             {/* Languages Card */}
-            <div className="p-6 rounded-lg border border-slate-200 bg-white shadow-2xs">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="p-6 rounded-lg border border-slate-200 hover:border-blueprint-300 bg-white shadow-2xs hover:shadow-xs transition-colors"
+            >
               <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-slate-100">
                 <Languages className="w-4 h-4 text-blueprint-600" />
                 <h3 className="font-heading font-semibold text-base text-slate-900">
@@ -69,18 +88,26 @@ export const Activities: React.FC = () => {
               </div>
               <div className="flex flex-wrap gap-2">
                 {personalProfile.languages.map((lang) => (
-                  <div
+                  <motion.div
                     key={lang}
-                    className="px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 font-medium"
+                    whileHover={{ scale: 1.05 }}
+                    className="px-3 py-1.5 rounded bg-slate-50 border border-slate-200 text-xs font-mono text-slate-800 font-medium cursor-default select-none"
                   >
                     {lang} (Fluent)
-                  </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Interests Card */}
-            <div className="p-6 rounded-lg border border-slate-200 bg-white shadow-2xs">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+              whileHover={{ y: -3, transition: { duration: 0.2 } }}
+              className="p-6 rounded-lg border border-slate-200 hover:border-blueprint-300 bg-white shadow-2xs hover:shadow-xs transition-colors"
+            >
               <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-slate-100">
                 <Heart className="w-4 h-4 text-blueprint-600" />
                 <h3 className="font-heading font-semibold text-base text-slate-900">
@@ -95,10 +122,11 @@ export const Activities: React.FC = () => {
                   </li>
                 ))}
               </ul>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
     </section>
   );
 };
+

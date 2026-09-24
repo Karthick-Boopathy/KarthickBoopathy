@@ -1,13 +1,20 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { GraduationCap, Award, CheckCircle2 } from 'lucide-react';
 import { educationList } from '../data/portfolioData';
 
 export const Education: React.FC = () => {
   return (
-    <section id="education" className="py-20 bg-slate-50 border-b border-slate-200">
+    <section id="education" className="py-20 bg-slate-50 border-b border-slate-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="max-w-3xl mb-12"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-blueprint-600 font-semibold mb-2">
             <GraduationCap className="w-3.5 h-3.5" />
             <span>Academic Qualifications</span>
@@ -18,14 +25,19 @@ export const Education: React.FC = () => {
           <p className="text-slate-600 mt-2 text-base">
             Formal automotive engineering foundation coupled with technical certifications.
           </p>
-        </div>
+        </motion.div>
 
         {/* Education Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {educationList.map((edu) => (
-            <div
+          {educationList.map((edu, idx) => (
+            <motion.div
               key={edu.degree}
-              className="bg-white rounded-lg border border-slate-200 p-6 flex flex-col justify-between shadow-2xs hover:border-slate-300 transition-colors"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="bg-white rounded-lg border border-slate-200 hover:border-blueprint-300 p-6 flex flex-col justify-between shadow-2xs hover:shadow-md transition-colors"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-4">
@@ -52,12 +64,19 @@ export const Education: React.FC = () => {
                   {edu.grade}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Professional Certification Banner */}
-        <div className="mt-8 p-5 rounded-lg border border-slate-200 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
+          whileHover={{ y: -2, transition: { duration: 0.2 } }}
+          className="mt-8 p-5 rounded-lg border border-slate-200 hover:border-blueprint-300 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs hover:shadow-xs transition-colors"
+        >
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded bg-amber-50 border border-amber-200 shrink-0">
               <Award className="w-5 h-5 text-amber-600" />
@@ -75,8 +94,9 @@ export const Education: React.FC = () => {
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>CERTIFIED TECHNICIAN</span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
+

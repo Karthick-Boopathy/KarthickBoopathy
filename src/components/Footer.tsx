@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Github, Linkedin, Instagram, ExternalLink, FileText, ArrowUp, Compass } from 'lucide-react';
 import { personalInfo, GITHUB_URL, LINKEDIN_URL, KANNAN_FARMS_INSTAGRAM_URL, RESUME_PDF_URL } from '../data/portfolioData';
 
@@ -8,14 +9,20 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer id="contact" className="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
+    <footer id="contact" className="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Contact Docket Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-12 border-b border-slate-800"
+        >
           {/* Main Dossier Column */}
           <div className="lg:col-span-6 space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded border border-slate-700 bg-slate-800 flex items-center justify-center font-mono text-xs font-bold text-white">
+              <div className="w-8 h-8 rounded border border-slate-700 bg-slate-800 flex items-center justify-center font-mono text-xs font-bold text-white shadow-2xs">
                 KB
               </div>
               <span className="font-heading font-bold text-xl text-white tracking-tight">
@@ -149,7 +156,7 @@ export const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bottom Bar: Copyright & Back-to-Top */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
@@ -158,16 +165,19 @@ export const Footer: React.FC = () => {
             <span>All rights reserved.</span>
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05, y: -1 }}
+            whileTap={{ scale: 0.95 }}
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors border border-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blueprint-500"
+            className="flex items-center gap-1.5 px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors border border-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blueprint-500 cursor-pointer"
             aria-label="Scroll back to top"
           >
             <span>Top of Page</span>
             <ArrowUp className="w-3 h-3" />
-          </button>
+          </motion.button>
         </div>
       </div>
     </footer>
   );
 };
+

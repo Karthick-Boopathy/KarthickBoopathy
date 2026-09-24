@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Code2, Wrench, Terminal, Layers } from 'lucide-react';
 import { technicalSkills } from '../data/portfolioData';
 
@@ -12,10 +13,16 @@ export const Skills: React.FC = () => {
   };
 
   return (
-    <section id="skills" className="py-20 bg-slate-50 border-b border-slate-200">
+    <section id="skills" className="py-20 bg-slate-50 border-b border-slate-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <div className="max-w-3xl mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
+          className="max-w-3xl mb-12"
+        >
           <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-blueprint-600 font-semibold mb-2">
             <Layers className="w-3.5 h-3.5" />
             <span>Technical Capabilities</span>
@@ -26,15 +33,20 @@ export const Skills: React.FC = () => {
           <p className="text-slate-600 mt-2 text-base">
             Systematic domain breakdown across software architecture, physical automotive systems, and operational platforms.
           </p>
-        </div>
+        </motion.div>
 
         {/* Skill Clusters Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {technicalSkills.map((cluster) => {
+          {technicalSkills.map((cluster, idx) => {
             const isSelected = selectedCategory === cluster.category;
             return (
-              <div
+              <motion.div
                 key={cluster.category}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
                 onMouseEnter={() => setSelectedCategory(cluster.category)}
                 onMouseLeave={() => setSelectedCategory(null)}
                 className={`bg-white rounded-lg border transition-all duration-200 p-6 flex flex-col justify-between ${
@@ -67,12 +79,14 @@ export const Skills: React.FC = () => {
                   {/* Skills Tag Matrix */}
                   <div className="flex flex-wrap gap-2">
                     {cluster.skills.map((skill) => (
-                      <span
+                      <motion.span
                         key={skill}
-                        className="inline-flex items-center px-2.5 py-1 rounded text-xs font-mono bg-slate-50 hover:bg-blueprint-50 text-slate-700 hover:text-blueprint-700 border border-slate-200 hover:border-blueprint-200 transition-colors cursor-default"
+                        whileHover={{ scale: 1.05, y: -1 }}
+                        whileTap={{ scale: 0.96 }}
+                        className="inline-flex items-center px-2.5 py-1 rounded text-xs font-mono bg-slate-50 hover:bg-blueprint-50 text-slate-700 hover:text-blueprint-700 border border-slate-200 hover:border-blueprint-200 transition-colors cursor-default select-none"
                       >
                         {skill}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </div>
@@ -82,7 +96,7 @@ export const Skills: React.FC = () => {
                   <span>DISCIPLINE SPEC</span>
                   <span className="text-slate-600 font-medium">HANDS-ON VERIFIED</span>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
@@ -90,3 +104,4 @@ export const Skills: React.FC = () => {
     </section>
   );
 };
+
