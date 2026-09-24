@@ -65,7 +65,7 @@ export const Hero: React.FC = () => {
             </a>
           </div>
           <div className="text-right tracking-widest text-[11px] text-slate-400 dark:text-slate-500 spec-label">
-            SPEC: AUTO-ENG // FULLSTACK // ENTERPRISE
+            SPEC: AUTO-ENG // VIBE CODER // ENTERPRISE
           </div>
         </motion.div>
 
@@ -79,9 +79,12 @@ export const Hero: React.FC = () => {
             className="lg:col-span-7 space-y-6"
           >
             <motion.div variants={itemVariants} className="space-y-3">
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider font-semibold">
-                <span className="px-2 py-0.5 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 rounded text-[11px]">KB-PORTFOLIO // V3</span>
-                <span>Automobile Engineering &times; Full-Stack Software</span>
+              <div className="flex flex-wrap items-center gap-2 text-xs font-mono uppercase tracking-wider font-semibold">
+                <span className="px-2 py-0.5 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/30 rounded text-[11px] text-blue-600 dark:text-blue-400">KB-PORTFOLIO // V3</span>
+                <span className="px-2.5 py-0.5 rounded bg-purple-50 dark:bg-purple-500/15 border border-purple-200 dark:border-purple-500/30 text-purple-700 dark:text-purple-300 text-[11px] font-bold flex items-center gap-1.5 shadow-2xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping inline-block" />
+                  VIBE CODER &times; AGENTIC BUILDER
+                </span>
               </div>
 
               {/* Bold Massive Hero Title */}
@@ -97,10 +100,10 @@ export const Hero: React.FC = () => {
 
             {/* Core Hook Statement */}
             <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl font-normal">
-              A hands-on builder operating at the convergence of{' '}
+              A hands-on builder and <span className="text-purple-600 dark:text-purple-400 font-semibold">vibe coder</span> operating at the convergence of{' '}
               <span className="text-slate-900 dark:text-white font-medium">vehicle systems engineering</span>,{' '}
-              <span className="text-slate-900 dark:text-white font-medium">production software architecture</span>, and{' '}
-              <span className="text-slate-900 dark:text-white font-medium">independent enterprise</span>. From ADAS camera calibration and EV powertrains to local LLM quantitative trading bots and full-stack e-commerce.
+              <span className="text-slate-900 dark:text-white font-medium">high-velocity AI-augmented software architecture</span>, and{' '}
+              <span className="text-slate-900 dark:text-white font-medium">independent enterprise</span>. Rapidly converting intuition into hardened code — from ADAS camera calibration and EV powertrains to local LLM quantitative trading bots and full-stack e-commerce.
             </motion.p>
 
             {/* Dual Core Pillars Badges */}
@@ -120,14 +123,17 @@ export const Hero: React.FC = () => {
 
               <motion.div
                 whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                className="p-3.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-500/40 rounded shadow-2xs hover:shadow-xs transition-colors flex items-start gap-3 glow-border"
+                className="p-3.5 bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 hover:border-purple-300 dark:hover:border-purple-500/40 rounded shadow-2xs hover:shadow-xs transition-colors flex items-start gap-3 glow-border"
               >
-                <div className="p-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 rounded text-slate-700 dark:text-slate-300">
-                  <Cpu className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <div className="p-2 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 rounded text-purple-700 dark:text-purple-300">
+                  <Cpu className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 </div>
                 <div>
-                  <h2 className="font-mono text-xs uppercase font-bold text-slate-900 dark:text-slate-100">Software & Autonomous</h2>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">FastAPI, React, Ollama LLM pipelines, Postgres & Canvas</p>
+                  <h2 className="font-mono text-xs uppercase font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                    <span>Vibe Coding &amp; Autonomous</span>
+                    <span className="px-1.5 py-0.2 rounded bg-purple-100 dark:bg-purple-900/60 text-[9px] text-purple-700 dark:text-purple-300 font-mono">10x</span>
+                  </h2>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Agentic workflows, FastAPI, React, Ollama LLMs &amp; prompt craft</p>
                 </div>
               </motion.div>
             </motion.div>

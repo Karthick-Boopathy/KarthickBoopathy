@@ -45,7 +45,7 @@ export interface PersonalInfo {
 
 export const personalInfo: PersonalInfo = {
   name: "Karthick Boopathy",
-  title: "Engineer & Independent Technical Builder",
+  title: "Automobile Engineer, Full-Stack Builder & Vibe Coder",
   location: "Coimbatore, Tamil Nadu, India",
   coordinates: "10°56'19.3\"N 76°57'07.5\"E",
   googleMapsUrl: "https://www.google.com/maps?q=10%C2%B056'19.3%22N+76%C2%B057'07.5%22E",
@@ -55,7 +55,7 @@ export const personalInfo: PersonalInfo = {
 };
 
 export const aboutSummary =
-  "Automobile engineering graduate with hands-on automotive experience (ADAS calibration, EV design, vehicle systems) and self-directed software development skills built through independent projects. Currently runs a natural-products e-commerce business end-to-end and builds automation tools, trading systems, and AI-assisted applications. Comfortable moving between hardware, mechanical systems, and full-stack software.";
+  "Automobile engineering graduate and modern vibe coder with hands-on automotive experience (ADAS calibration, EV design, vehicle systems) and high-velocity software engineering skills built through AI-augmented workflows and self-directed projects. Currently runs a natural-products e-commerce business end-to-end and builds automation tools, trading systems, and AI-assisted applications. Comfortable moving fluidly between physical hardware, mechanical rigor, and rapid vibe-coded full-stack software.";
 
 export interface SkillCategory {
   category: string;
@@ -65,16 +65,17 @@ export interface SkillCategory {
 
 export const technicalSkills: SkillCategory[] = [
   {
-    category: "Software & Development",
-    tagline: "Full-stack systems, trading engines, local LLM integrations, and reactive web platforms.",
+    category: "Software & Vibe Coding",
+    tagline: "High-velocity AI-augmented development, trading engines, local LLM integrations, and reactive web platforms.",
     skills: [
+      "Vibe Coding & Agentic AI",
       "Python",
       "JavaScript",
       "React",
       "FastAPI",
+      "Local LLM Tooling (Ollama)",
       "Firebase/Firestore",
-      "Local LLM tooling (Ollama)",
-      "Automation scripting",
+      "Prompt Engineering & Automation",
       "PostgreSQL",
       "HTML5/Canvas",
     ],

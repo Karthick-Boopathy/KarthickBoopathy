@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Wrench, Store, Code2, CheckCircle2 } from 'lucide-react';
+import { Wrench, Store, Code2, CheckCircle2, Sparkles } from 'lucide-react';
 import { aboutSummary, personalInfo } from '../data/portfolioData';
 
 export const About: React.FC = () => {
@@ -83,6 +83,25 @@ export const About: React.FC = () => {
                 </div>
               </motion.div>
             </div>
+
+            {/* Vibe Coding Feature Banner */}
+            <motion.div
+              whileHover={{ y: -2, transition: { duration: 0.2 } }}
+              className="p-4 rounded-lg border border-purple-200 dark:border-purple-800/60 bg-gradient-to-r from-purple-50/80 via-blue-50/50 to-indigo-50/80 dark:from-purple-950/30 dark:via-blue-950/20 dark:to-indigo-950/30 shadow-2xs glow-border flex items-start gap-3.5"
+            >
+              <div className="p-2 rounded bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 shrink-0">
+                <Sparkles className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-mono text-xs uppercase font-bold text-purple-900 dark:text-purple-300">The Vibe Coding Paradigm</h3>
+                  <span className="px-2 py-0.5 rounded-full bg-purple-200/80 dark:bg-purple-800/60 text-[9px] font-mono font-bold text-purple-800 dark:text-purple-200">AI-NATIVE 10x</span>
+                </div>
+                <p className="text-xs text-slate-700 dark:text-slate-300 mt-1 leading-relaxed">
+                  Pioneering agentic development workflows: moving from conceptual spark to deployed production software in hours. Leveraging local LLMs (Ollama), AI pair programming, and prompt-driven orchestration while maintaining rigorous automobile-grade standards for testing and persistence.
+                </p>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Right Column: Dual Architecture Visualizer */}

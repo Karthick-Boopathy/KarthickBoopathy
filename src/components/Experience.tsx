@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Briefcase, ExternalLink, Instagram, Calendar, ChevronDown, ChevronUp, Layers, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
 import { experiences } from '../data/portfolioData';
 
@@ -7,6 +7,52 @@ export const Experience: React.FC = () => {
   const [expandedStudies, setExpandedStudies] = useState<Record<string, boolean>>({
     'kannan-farms': true, // Auto-expand flagship project
   });
+
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [scrollDirection, setScrollDirection] = useState<number>(1);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ['start 40%', 'end 80%'],
+  });
+
+  const lineProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 25,
+    restDelta: 0.001,
+  });
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const dir = currentScrollY >= lastScrollY ? 1 : -1;
+      lastScrollY = currentScrollY;
+
+      // The tracker sits around 160px from the viewport top
+      const trackerY = 160;
+
+      let currentIdx = 0;
+      itemRefs.current.forEach((el, index) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // If the top of the card has reached or passed the tracker line
+        if (rect.top <= trackerY + 80) {
+          currentIdx = index;
+        }
+      });
+
+      setScrollDirection(dir);
+      setActiveIndex(currentIdx);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleCaseStudy = (id: string) => {
     setExpandedStudies((prev) => ({
@@ -44,211 +90,300 @@ export const Experience: React.FC = () => {
         </motion.div>
 
         {/* Timeline Sequence Container */}
-        <div className="relative border-l-2 border-slate-200 dark:border-slate-800 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-12">
-          {experiences.map((exp, idx) => {
-            const isExpanded = !!expandedStudies[exp.id];
+        <div ref={timelineRef} className="relative ml-4 sm:ml-8 pl-6 sm:pl-10">
+          {/* Base Vertical Timeline Rail */}
+          <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-slate-200 dark:bg-slate-800">
+            {/* Animated Flowing Progress Fill Line */}
+            <motion.div
+              style={{ scaleY: lineProgress }}
+              className="absolute left-0 top-0 bottom-0 w-full bg-gradient-to-b from-blue-500 via-cyan-400 to-purple-500 origin-top shadow-[0_0_10px_#3B82F6]"
+            />
+          </div>
 
-            return (
+          {/* Sticky Continuous Scrolling HUD Number Indicator */}
+          <div className="sticky top-32 z-30 pointer-events-none -ml-6 sm:-ml-10 h-0">
+            <div className="relative -top-5 -left-[18px] sm:-left-[20px] flex items-center gap-3">
+              {/* Rolling Number Box */}
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-lg border-2 border-blue-500 dark:border-blue-400 bg-white dark:bg-[#0B0F1A] shadow-glow-md flex items-center justify-center font-mono text-sm sm:text-base font-bold text-blue-600 dark:text-blue-400 overflow-hidden relative">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span
+                    key={activeIndex}
+                    initial={{
+                      y: scrollDirection > 0 ? 22 : -22,
+                      opacity: 0,
+                      scale: 0.8,
+                    }}
+                    animate={{
+                      y: 0,
+                      opacity: 1,
+                      scale: 1,
+                    }}
+                    exit={{
+                      y: scrollDirection > 0 ? -22 : 22,
+                      opacity: 0,
+                      scale: 0.8,
+                    }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute"
+                  >
+                    {String(activeIndex + 1).padStart(2, '0')}
+                  </motion.span>
+                </AnimatePresence>
+
+                {/* Subtle corner CAD fiducial dots */}
+                <span className="absolute top-1 right-1 w-1 h-1 bg-blue-500 dark:bg-blue-400 rounded-full" />
+                <span className="absolute bottom-1 left-1 w-1 h-1 bg-blue-500 dark:bg-blue-400 rounded-full" />
+              </div>
+
+              {/* Floating Live Telemetry HUD Tag */}
               <motion.div
-                key={exp.id}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.21, 0.47, 0.32, 0.98] }}
-                className="relative group"
+                key={`hud-${activeIndex}`}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.25 }}
+                className="hidden md:flex items-center gap-2 px-3 py-1 rounded-md bg-slate-900/90 dark:bg-[#111827]/95 border border-blue-500/40 text-white backdrop-blur-md shadow-lg"
               >
-                {/* Chronological Sequence Marker */}
-                <div className="absolute -left-[35px] sm:-left-[51px] top-0 w-8 h-8 sm:w-9 sm:h-9 rounded border-2 border-slate-300 dark:border-slate-700 group-hover:border-blue-500 bg-white dark:bg-[#111827] flex items-center justify-center font-mono text-xs font-bold text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:scale-105 transition-all duration-200 shadow-2xs group-hover:shadow-glow-sm">
-                  {exp.number}
-                </div>
+                <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_#60A5FA]" />
+                <span className="text-[10px] font-mono text-blue-300 font-bold tracking-wider">
+                  ACTIVE // {String(activeIndex + 1).padStart(2, '0')} OF 07
+                </span>
+                <span className="text-slate-600 text-[10px]">|</span>
+                <span className="text-xs font-mono text-slate-200 font-semibold truncate max-w-[260px]">
+                  {experiences[activeIndex].role}
+                </span>
+              </motion.div>
+            </div>
+          </div>
 
-                {/* Experience Card */}
-                <motion.div
-                  whileHover={{ y: -2, transition: { duration: 0.2 } }}
-                  className="p-6 sm:p-7 rounded-lg border border-slate-200 dark:border-slate-800 group-hover:border-slate-300 dark:group-hover:border-slate-700 bg-white dark:bg-[#111827] transition-all duration-200 shadow-2xs hover:shadow-md dark:shadow-glow-sm glow-border"
+          {/* Cards List */}
+          <div className="space-y-12">
+            {experiences.map((exp, idx) => {
+              const isExpanded = !!expandedStudies[exp.id];
+              const isActive = activeIndex === idx;
+
+              return (
+                <div
+                  key={exp.id}
+                  ref={(el) => (itemRefs.current[idx] = el)}
+                  className="relative group"
                 >
-                  {/* Header row */}
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
-                    <div>
-                      <h3 className="font-heading font-bold text-xl text-slate-900 dark:text-white">
-                        {exp.role}
-                      </h3>
-                      <div className="flex flex-wrap items-center gap-2 mt-1">
-                        <span className="font-semibold text-blue-700 dark:text-blue-400 text-sm">
-                          {exp.organization}
-                        </span>
-                        {exp.website && (
-                          <a
-                            href={exp.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-xs font-mono text-blue-600 dark:text-blue-400 hover:underline px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-500/10 border border-blue-200/50 dark:border-blue-500/30"
-                          >
-                            <span>Storefront</span>
-                            <ExternalLink className="w-3 h-3" />
-                          </a>
-                        )}
-                        {exp.instagram && (
-                          <a
-                            href={exp.instagram}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-xs font-mono text-slate-600 dark:text-slate-400 hover:text-pink-600 dark:hover:text-pink-400 px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 hover:bg-pink-50 dark:hover:bg-pink-500/10"
-                          >
-                            <Instagram className="w-3 h-3" />
-                            <span>Instagram</span>
-                          </a>
-                        )}
+                  {/* Timeline Station Milestone Tick (Anchored at each card) */}
+                  <div
+                    className={`absolute -left-[30px] sm:-left-[46px] top-3 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full border-2 transition-all duration-300 ${
+                      isActive
+                        ? 'border-blue-500 bg-blue-500 scale-125 shadow-[0_0_10px_#3B82F6]'
+                        : idx < activeIndex
+                        ? 'border-blue-400 dark:border-blue-500 bg-blue-400 dark:bg-blue-500'
+                        : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-[#111827]'
+                    }`}
+                  />
+
+                  {/* Experience Card */}
+                  <motion.div
+                    initial={{ opacity: 0, x: -16 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: '-40px' }}
+                    transition={{ duration: 0.45, delay: idx * 0.05, ease: [0.21, 0.47, 0.32, 0.98] }}
+                    whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                    className={`p-6 sm:p-7 rounded-lg border transition-all duration-300 shadow-2xs glow-border ${
+                      isActive
+                        ? 'border-blue-400/80 dark:border-blue-500/80 bg-white dark:bg-[#111827] shadow-md dark:shadow-glow-sm ring-1 ring-blue-500/20'
+                        : 'border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-[#111827]/90 hover:border-slate-300 dark:hover:border-slate-700'
+                    }`}
+                  >
+                    {/* Header row */}
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-4 mb-4 border-b border-slate-100 dark:border-slate-800">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                            TRACK {exp.number}
+                          </span>
+                          {isActive && (
+                            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-500/15 border border-blue-200 dark:border-blue-500/30 text-blue-600 dark:text-blue-400 font-bold animate-pulse">
+                              VIEWING
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="font-heading font-bold text-xl text-slate-900 dark:text-white">
+                          {exp.role}
+                        </h3>
+                        <div className="flex flex-wrap items-center gap-2 mt-1">
+                          <span className="font-semibold text-blue-700 dark:text-blue-400 text-sm">
+                            {exp.organization}
+                          </span>
+                          {exp.website && (
+                            <a
+                              href={exp.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-xs font-mono text-blue-600 dark:text-blue-400 hover:underline px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-500/10 border border-blue-200/50 dark:border-blue-500/30"
+                            >
+                              <span>Storefront</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                          {exp.instagram && (
+                            <a
+                              href={exp.instagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-xs font-mono text-slate-600 dark:text-slate-400 hover:text-pink-600 dark:hover:text-pink-400 px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 hover:bg-pink-50 dark:hover:bg-pink-500/10"
+                            >
+                              <Instagram className="w-3 h-3" />
+                              <span>Instagram</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60 px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700/80 shrink-0">
+                        <Calendar className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
+                        <span>{exp.period}</span>
                       </div>
                     </div>
 
-                    <div className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/60 px-2.5 py-1 rounded border border-slate-200 dark:border-slate-700/80 shrink-0">
-                      <Calendar className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
-                      <span>{exp.period}</span>
-                    </div>
-                  </div>
+                    {/* Bullets (Verbatim content) */}
+                    <ul className="space-y-2.5">
+                      {exp.bullets.map((bullet, bIdx) => (
+                        <motion.li
+                          key={bIdx}
+                          initial={{ opacity: 0, x: -8 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.3, delay: bIdx * 0.05 }}
+                          className="flex items-start gap-2.5 text-slate-700 dark:text-slate-300 text-sm leading-relaxed"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 mt-2 shrink-0"></span>
+                          <span>{bullet}</span>
+                        </motion.li>
+                      ))}
+                    </ul>
 
-                  {/* Bullets (Verbatim content) */}
-                  <ul className="space-y-2.5">
-                    {exp.bullets.map((bullet, bIdx) => (
-                      <motion.li
-                        key={bIdx}
-                        initial={{ opacity: 0, x: -8 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: bIdx * 0.05 }}
-                        className="flex items-start gap-2.5 text-slate-700 dark:text-slate-300 text-sm leading-relaxed"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 mt-2 shrink-0"></span>
-                        <span>{bullet}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
+                    {/* Expandable Case Study Button */}
+                    {exp.caseStudy && (
+                      <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+                        <button
+                          type="button"
+                          onClick={() => toggleCaseStudy(exp.id)}
+                          className="w-full flex items-center justify-between p-3 rounded-md bg-blue-50/70 hover:bg-blue-100/70 dark:bg-blue-500/10 dark:hover:bg-blue-500/20 border border-blue-200/80 dark:border-blue-500/30 text-blue-700 dark:text-blue-300 font-mono text-xs uppercase tracking-wider font-semibold transition-all group/btn"
+                        >
+                          <span className="flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                            <span>{isExpanded ? 'Hide Architectural Case Study & Screenshot' : 'View Deep Case Study & Production Screenshot'}</span>
+                          </span>
+                          {isExpanded ? (
+                            <ChevronUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                          ) : (
+                            <ChevronDown className="w-4 h-4 text-blue-600 dark:text-blue-400 group-hover/btn:translate-y-0.5 transition-transform" />
+                          )}
+                        </button>
 
-                  {/* Expandable Case Study Button */}
-                  {exp.caseStudy && (
-                    <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800/80">
-                      <button
-                        type="button"
-                        onClick={() => toggleCaseStudy(exp.id)}
-                        className="w-full flex items-center justify-between p-3 rounded-md bg-blue-50/70 hover:bg-blue-100/70 dark:bg-blue-500/10 dark:hover:bg-blue-500/20 border border-blue-200/80 dark:border-blue-500/30 text-blue-700 dark:text-blue-300 font-mono text-xs uppercase tracking-wider font-semibold transition-all group/btn"
-                      >
-                        <span className="flex items-center gap-2">
-                          <Sparkles className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                          <span>{isExpanded ? 'Hide Architectural Case Study & Screenshot' : 'View Deep Case Study & Production Screenshot'}</span>
-                        </span>
-                        {isExpanded ? (
-                          <ChevronUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                        ) : (
-                          <ChevronDown className="w-4 h-4 text-blue-600 dark:text-blue-400 group-hover/btn:translate-y-0.5 transition-transform" />
-                        )}
-                      </button>
+                        {/* Expandable Case Study Drawer */}
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                              className="overflow-hidden mt-4 space-y-5"
+                            >
+                              {/* Tagline */}
+                              <div className="p-3 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs font-mono text-blue-600 dark:text-blue-400 font-semibold uppercase">
+                                // {exp.caseStudy.tagline}
+                              </div>
 
-                      {/* Expandable Case Study Drawer */}
-                      <AnimatePresence>
-                        {isExpanded && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                            className="overflow-hidden mt-4 space-y-5"
-                          >
-                            {/* Tagline */}
-                            <div className="p-3 rounded bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs font-mono text-blue-600 dark:text-blue-400 font-semibold uppercase">
-                              // {exp.caseStudy.tagline}
-                            </div>
-
-                            {/* Problem & Approach Grid */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <div className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-1.5">
-                                <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
-                                  <AlertCircle className="w-3.5 h-3.5" />
-                                  <span>Problem &amp; Challenge</span>
+                              {/* Problem & Approach Grid */}
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-1.5">
+                                  <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                                    <AlertCircle className="w-3.5 h-3.5" />
+                                    <span>Problem &amp; Challenge</span>
+                                  </div>
+                                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-body">
+                                    {exp.caseStudy.problem}
+                                  </p>
                                 </div>
-                                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-body">
-                                  {exp.caseStudy.problem}
-                                </p>
-                              </div>
 
-                              <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20 space-y-1.5">
-                                <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                                  <CheckCircle2 className="w-3.5 h-3.5" />
-                                  <span>Engineering Approach</span>
+                                <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20 space-y-1.5">
+                                  <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                                    <CheckCircle2 className="w-3.5 h-3.5" />
+                                    <span>Engineering Approach</span>
+                                  </div>
+                                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-body">
+                                    {exp.caseStudy.approach}
+                                  </p>
                                 </div>
-                                <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-body">
-                                  {exp.caseStudy.approach}
-                                </p>
                               </div>
-                            </div>
 
-                            {/* Key Technical Execution Points */}
-                            <div className="space-y-2">
-                              <div className="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-1.5">
-                                <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                                <span>Architecture Specifications</span>
+                              {/* Key Technical Execution Points */}
+                              <div className="space-y-2">
+                                <div className="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold flex items-center gap-1.5">
+                                  <Layers className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                                  <span>Architecture Specifications</span>
+                                </div>
+                                <ul className="space-y-1.5 pl-1">
+                                  {exp.caseStudy.architectureDetails.map((detail, dIdx) => (
+                                    <li key={dIdx} className="text-xs text-slate-600 dark:text-slate-300 font-mono flex items-start gap-2">
+                                      <span className="text-blue-600 dark:text-blue-400">&bull;</span>
+                                      <span>{detail}</span>
+                                    </li>
+                                  ))}
+                                </ul>
                               </div>
-                              <ul className="space-y-1.5 pl-1">
-                                {exp.caseStudy.architectureDetails.map((detail, dIdx) => (
-                                  <li key={dIdx} className="text-xs text-slate-600 dark:text-slate-300 font-mono flex items-start gap-2">
-                                    <span className="text-blue-600 dark:text-blue-400">&bull;</span>
-                                    <span>{detail}</span>
-                                  </li>
+
+                              {/* High-Fidelity Screenshot Display with Ken Burns Zoom */}
+                              <div className="space-y-2">
+                                <div className="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
+                                  Production Interface Screenshot
+                                </div>
+                                <figure className="relative rounded-lg border border-slate-300 dark:border-slate-700/80 overflow-hidden bg-slate-900 group/img shadow-md dark:shadow-glow-sm">
+                                  <div className="aspect-16/10 overflow-hidden">
+                                    <img
+                                      src={exp.caseStudy.screenshot}
+                                      alt={exp.caseStudy.screenshotAlt}
+                                      loading="lazy"
+                                      className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover/img:scale-105"
+                                    />
+                                  </div>
+                                  <figcaption className="p-3 bg-slate-900/90 dark:bg-[#0B0F1A]/95 backdrop-blur-xs border-t border-slate-800 text-[11px] font-mono text-slate-300 flex items-center justify-between">
+                                    <span>{exp.caseStudy.screenshotCaption}</span>
+                                    <span className="text-blue-400 text-[10px] hidden sm:inline">HIGH RESOLUTION VIEW</span>
+                                  </figcaption>
+                                </figure>
+                              </div>
+
+                              {/* Metrics Strip */}
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
+                                {exp.caseStudy.metrics.map((metric) => (
+                                  <div key={metric.label} className="p-2.5 rounded bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-center font-mono">
+                                    <div className="text-[10px] uppercase text-slate-400 dark:text-slate-500">{metric.label}</div>
+                                    <div className="text-xs font-bold text-slate-900 dark:text-white mt-0.5">{metric.val}</div>
+                                  </div>
                                 ))}
-                              </ul>
-                            </div>
-
-                            {/* High-Fidelity Screenshot Display with Ken Burns Zoom */}
-                            <div className="space-y-2">
-                              <div className="font-mono text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
-                                Production Interface Screenshot
                               </div>
-                              <figure className="relative rounded-lg border border-slate-300 dark:border-slate-700/80 overflow-hidden bg-slate-900 group/img shadow-md dark:shadow-glow-sm">
-                                <div className="aspect-16/10 overflow-hidden">
-                                  <img
-                                    src={exp.caseStudy.screenshot}
-                                    alt={exp.caseStudy.screenshotAlt}
-                                    loading="lazy"
-                                    className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover/img:scale-105"
-                                  />
-                                </div>
-                                <figcaption className="p-3 bg-slate-900/90 dark:bg-[#0B0F1A]/95 backdrop-blur-xs border-t border-slate-800 text-[11px] font-mono text-slate-300 flex items-center justify-between">
-                                  <span>{exp.caseStudy.screenshotCaption}</span>
-                                  <span className="text-blue-400 text-[10px] hidden sm:inline">HIGH RESOLUTION VIEW</span>
-                                </figcaption>
-                              </figure>
-                            </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    )}
 
-                            {/* Metrics Strip */}
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
-                              {exp.caseStudy.metrics.map((metric) => (
-                                <div key={metric.label} className="p-2.5 rounded bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 text-center font-mono">
-                                  <div className="text-[10px] uppercase text-slate-400 dark:text-slate-500">{metric.label}</div>
-                                  <div className="text-xs font-bold text-slate-900 dark:text-white mt-0.5">{metric.val}</div>
-                                </div>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                    {/* Tech & Domain Badges */}
+                    <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-1.5">
+                      {exp.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-0.5 rounded text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 transition-colors"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
-                  )}
-
-                  {/* Tech & Domain Badges */}
-                  <div className="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center gap-1.5">
-                    {exp.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 rounded text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 hover:border-slate-300 dark:hover:border-slate-600 transition-colors"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              </motion.div>
-            );
-          })}
+                  </motion.div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
